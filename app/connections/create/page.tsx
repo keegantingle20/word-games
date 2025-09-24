@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ConnectionsPuzzle, ConnectionsGroup } from "@/types/data";
 
 const emptyGroup = (): ConnectionsGroup => ({ title: "", words: ["", "", "", ""], color: "bg-yellow-400", hint: "", description: "", personal: {} });
@@ -18,7 +18,7 @@ export default function CreateConnectionsPage() {
     setPuzzle((p) => {
       const g = [...p.groups];
       g[i] = { ...g[i], ...update } as ConnectionsGroup;
-      return { ...p, groups: g };
+      return { ...p, groups: g as [ConnectionsGroup, ConnectionsGroup, ConnectionsGroup, ConnectionsGroup] };
     });
   }
 
@@ -79,7 +79,7 @@ export default function CreateConnectionsPage() {
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <label className="text-sm opacity-70">Difficulty</label>
-        <select value={puzzle.metadata?.difficulty||"easy"} onChange={(e) => setPuzzle((p) => ({ ...p, metadata: { ...(p.metadata||{}), difficulty: e.target.value as any } }))} className="rounded-md border border-black/10 dark:border-white/10 bg-[var(--card)] px-2 py-1 text-sm">
+        <select value={puzzle.metadata?.difficulty||"easy"} onChange={(e) => setPuzzle((p) => ({ ...p, metadata: { ...(p.metadata||{}), difficulty: e.target.value as "easy" | "medium" | "hard" | "expert" } }))} className="rounded-md border border-black/10 dark:border-white/10 bg-[var(--card)] px-2 py-1 text-sm">
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>

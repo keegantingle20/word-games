@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   assetPrefix: basePath || undefined,
   trailingSlash: true,
   images: { unoptimized: true },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

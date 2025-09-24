@@ -61,7 +61,7 @@ export default function ConnectionsPage() {
     })();
   }, []);
 
-  const gameOver = mistakes >= 4 || (puzzle && solved.length === 4);
+  const gameOver = mistakes >= 4 || (puzzle && solved.length === 4) || false;
   const won = puzzle && solved.length === 4;
 
   function toggle(word: string) {
