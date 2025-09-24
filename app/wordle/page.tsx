@@ -225,7 +225,7 @@ export default function WordlePage() {
       {/* Settings */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <label className="text-sm opacity-70">Mode</label>
-        <select value={mode} onChange={(e) => setMode(e.target.value as any)} className="rounded-md border border-black/10 dark:border-white/10 bg-[var(--card)] px-2 py-1 text-sm">
+        <select value={mode} onChange={(e) => setMode(e.target.value as "daily" | "random")} className="rounded-md border border-black/10 dark:border-white/10 bg-[var(--card)] px-2 py-1 text-sm">
           <option value="daily">Daily</option>
           <option value="random">Random</option>
         </select>

@@ -56,7 +56,7 @@ export default function CreateConnectionsPage() {
             <input value={g.title} onChange={(e) => updateGroup(i, { title: e.target.value })} placeholder="Group title" className="w-full mb-2 rounded-md border border-black/10 dark:border-white/10 px-2 py-1" />
             <div className="grid grid-cols-2 gap-2">
               {g.words.map((w, wi) => (
-                <input key={wi} value={w} onChange={(e) => updateGroup(i, { words: g.words.map((x, xi) => xi === wi ? e.target.value : x) as any })} placeholder={`Word ${wi + 1}`} className="w-full rounded-md border border-black/10 dark:border-white/10 px-2 py-1" />
+                <input key={wi} value={w} onChange={(e) => updateGroup(i, { words: g.words.map((x, xi) => xi === wi ? e.target.value : x) as [string, string, string, string] })} placeholder={`Word ${wi + 1}`} className="w-full rounded-md border border-black/10 dark:border-white/10 px-2 py-1" />
               ))}
             </div>
             <div className="mt-2 grid grid-cols-2 gap-2">
