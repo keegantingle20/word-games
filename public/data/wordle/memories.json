@@ -1,0 +1,40 @@
+{
+  "id": "memories.en",
+  "language": "en",
+  "title": "Shared Memories",
+  "description": "Words tied to our favorite shared moments.",
+  "metadata": {
+    "difficulty": "easy",
+    "themes": ["memories", "us"],
+    "personal": { "note": "First pass of memory words" },
+    "createdAt": "2025-09-23T00:00:00.000Z"
+  },
+  "words": [
+    { "word": "smile", "categories": ["memories"], "metadata": { "themes": ["joy"], "personal": { "note": "Your laugh on the pier" } } },
+    { "word": "beach", "categories": ["trip"], "metadata": { "themes": ["summer"], "personal": { "note": "Sunset walk" } } },
+    { "word": "storm", "categories": ["weather"], "metadata": { "personal": { "note": "Power outage board games" } } },
+    { "word": "dance", "categories": ["music"], "metadata": { "personal": { "note": "Kitchen playlist night" } } },
+    { "word": "toast", "categories": ["celebrate"], "metadata": { "personal": { "note": "New Year's cheer" } } },
+    { "word": "notes", "categories": ["letters"], "metadata": { "personal": { "note": "Sticky notes on the fridge" } } },
+    { "word": "cabin", "categories": ["trip"], "metadata": { "themes": ["winter"], "personal": { "note": "Snowy weekend" } } },
+    { "word": "perch", "categories": ["spots"], "metadata": { "personal": { "note": "Favorite lookout" } } },
+    { "word": "piano", "categories": ["music"], "metadata": { "personal": { "note": "You learned that song" } } },
+    { "word": "photo", "categories": ["memories"], "metadata": { "personal": { "note": "Polaroid wall" } } },
+    { "word": "gifts", "categories": ["holidays"], "metadata": { "personal": { "note": "Surprise on doorstep" } } },
+    { "word": "river", "categories": ["nature"], "metadata": { "personal": { "note": "Skipping stones" } } },
+    { "word": "honey", "categories": ["sweet"], "metadata": { "personal": { "note": "Pet name" } } },
+    { "word": "comic", "categories": ["fun"], "metadata": { "personal": { "note": "Inside joke day" } } },
+    { "word": "sunny", "categories": ["weather"], "metadata": { "personal": { "note": "Picnic in the park" } } },
+    { "word": "s'mor", "categories": ["camp"], "metadata": { "personal": { "note": "Fire pit night" } } },
+    { "word": "cider", "categories": ["season"], "metadata": { "personal": { "note": "Autumn market" } } },
+    { "word": "miles", "categories": ["road"], "metadata": { "personal": { "note": "Long drive talks" } } },
+    { "word": "swing", "categories": ["park"], "metadata": { "personal": { "note": "Playground stop" } } },
+    { "word": "chips", "categories": ["snack"], "metadata": { "personal": { "note": "Movie night favorite" } } },
+    { "word": "candy", "categories": ["sweet"], "metadata": { "personal": { "note": "Halloween haul" } } },
+    { "word": "craft", "categories": ["diy"], "metadata": { "personal": { "note": "Paint night" } } },
+    { "word": "bikes", "categories": ["outdoor"], "metadata": { "personal": { "note": "Trail ride" } } },
+    { "word": "hike", "categories": ["outdoor"], "metadata": { "personal": { "note": "First summit" } } }
+  ]
+}
+
+
