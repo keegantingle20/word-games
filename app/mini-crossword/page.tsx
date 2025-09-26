@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { dailyGameManager } from "@/lib/dailyGames";
+import { getTodaysMiniCrossword } from "@/lib/data";
 
 type Cell = {
   letter: string;
@@ -26,29 +27,6 @@ type Clue = {
   length: number;
 };
 
-// Sample mini crossword data
-const MINI_CROSSWORD_DATA = {
-  grid: [
-    ["S", "U", "N", "S", "E", "T"],
-    ["A", "", "R", "", "A", ""],
-    ["L", "A", "K", "E", "", ""],
-    ["E", "", "E", "", "R", ""],
-    ["S", "T", "A", "R", "S", ""],
-    ["", "", "S", "", "", ""],
-  ],
-  clues: {
-    across: [
-      { number: 1, text: "Golden hour view", answer: "SUNSET", startRow: 0, startCol: 0, length: 6 },
-      { number: 3, text: "Body of water", answer: "LAKE", startRow: 2, startCol: 0, length: 4 },
-      { number: 5, text: "Twinkling objects", answer: "STARS", startRow: 4, startCol: 0, length: 5 },
-    ],
-    down: [
-      { number: 1, text: "Solar system center", answer: "SUN", startRow: 0, startCol: 0, length: 3 },
-      { number: 2, text: "Not false", answer: "TRUE", startRow: 0, startCol: 2, length: 4 },
-      { number: 4, text: "Eager", answer: "EAGER", startRow: 0, startCol: 4, length: 5 },
-    ],
-  },
-};
 
 export default function MiniCrosswordPage() {
   const [grid, setGrid] = useState<Cell[][]>([]);
@@ -83,7 +61,8 @@ export default function MiniCrosswordPage() {
   }, []);
 
   const initializeGame = () => {
-    const { grid: gridData, clues: cluesData } = MINI_CROSSWORD_DATA;
+    const puzzleData = getTodaysMiniCrossword();
+    const { grid: gridData, clues: cluesData } = puzzleData;
     
     const newGrid: Cell[][] = gridData.map((row, rowIndex) =>
       row.map((cell, colIndex) => ({

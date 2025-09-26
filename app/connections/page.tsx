@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { loadConnectionsPuzzle } from "@/lib/data";
+import { getTodaysConnectionsPuzzle } from "@/lib/data";
 import type { ConnectionsPuzzle } from "@/types/data";
 import { cn } from "@/lib/utils";
 import { dailyGameManager } from "@/lib/dailyGames";
@@ -48,7 +48,7 @@ export default function ConnectionsPage() {
     (async () => {
       try {
         // Get today's puzzle
-        const data = await loadConnectionsPuzzle();
+        const data = getTodaysConnectionsPuzzle();
         if (!data) {
           setMessage("Puzzle not found.");
           return;

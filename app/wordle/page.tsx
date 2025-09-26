@@ -3,8 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Keyboard from "./Keyboard";
 import { cn } from "@/lib/utils";
-import { loadWordleList } from "@/lib/data";
-import type { WordEntry, WordleList } from "@/types/data";
+import { getTodaysWordleWord } from "@/lib/data";
 import confetti from "canvas-confetti";
 import { dailyGameManager } from "@/lib/dailyGames";
 
@@ -77,18 +76,24 @@ export default function WordlePage() {
     let ignore = false;
     (async () => {
       try {
-        const data = await loadWordleList("/data/wordle/words.en.json");
+        // Get today's word directly
+        const todayWord = getTodaysWordleWord();
         if (ignore) return;
-        setList(data);
-        setAllWords(data.words);
-        const words = new Set(data.words.map(w => w.word));
-        setWordsSet(words);
         
-        // Get today's word
-        const todayIndex = dayIndex();
-        const todayWord = data.words[todayIndex % data.words.length];
-        setAnswer(todayWord.word);
-        setAnswerEntry(todayWord);
+        setAnswer(todayWord);
+        setAnswerEntry({
+          word: todayWord,
+          categories: ["daily"],
+          metadata: {
+            difficulty: "medium",
+            themes: ["daily"],
+            personal: { note: "Today's word" }
+          }
+        });
+        
+        // Create a simple word set for validation
+        const words = new Set([todayWord]);
+        setWordsSet(words);
         
         // Check if already played today (only on client side)
         if (typeof window !== "undefined") {
