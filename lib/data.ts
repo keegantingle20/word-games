@@ -1,5 +1,6 @@
 import type { WordleList, ConnectionsPuzzle } from "@/types/data";
 import { dailyPuzzleGenerator } from "./wordBanks";
+import { wordManager } from "./wordManager";
 
 // Load Wordle words list from public JSON by path (relative to /public)
 export async function loadWordleList(path = "/data/wordle/words.en.json"): Promise<WordleList> {
@@ -85,11 +86,35 @@ export async function listConnectionsPuzzles() {
 
 // Get today's word directly
 export function getTodaysWordleWord(): string {
+  // Try to get a custom word first
+  if (typeof window !== "undefined") {
+    const customWords = wordManager.getAllWordsForGame("wordle");
+    if (customWords.length > 0) {
+      const today = new Date();
+      const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+      const index = dayOfYear % customWords.length;
+      return customWords[index];
+    }
+  }
+  
+  // Fallback to built-in words
   return dailyPuzzleGenerator.getTodaysWordle();
 }
 
 // Get today's connections puzzle directly
 export function getTodaysConnectionsPuzzle() {
+  // Try to get a custom puzzle first
+  if (typeof window !== "undefined") {
+    const customPuzzles = wordManager.getCustomConnectionsPuzzles();
+    if (customPuzzles.length > 0) {
+      const today = new Date();
+      const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+      const index = dayOfYear % customPuzzles.length;
+      return customPuzzles[index];
+    }
+  }
+  
+  // Fallback to built-in puzzle
   return dailyPuzzleGenerator.getTodaysConnections();
 }
 

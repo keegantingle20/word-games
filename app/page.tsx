@@ -42,15 +42,25 @@ export default function HomePage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Hero Section */}
-      <div className="text-center mb-16">
-        <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-          Jessie's Games
-        </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          Play today's puzzles. New ones available every day.
-        </p>
-      </div>
+            {/* Hero Section */}
+            <div className="text-center mb-16">
+              <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+                Jessie's Games
+              </h1>
+              <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Play today's puzzles. New ones available every day.
+              </p>
+              {/* Hidden admin access - only visible to you */}
+              <div className="mt-4">
+                <a 
+                  href="/admin" 
+                  className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 opacity-0 hover:opacity-100 transition-opacity"
+                  title="Admin Panel"
+                >
+                  Admin
+                </a>
+              </div>
+            </div>
 
       {/* Games Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
