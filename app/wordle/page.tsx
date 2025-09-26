@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Keyboard from "./Keyboard";
 import { cn } from "@/lib/utils";
@@ -156,8 +156,13 @@ export default function WordlePage() {
     return () => { ignore = true; };
   }, []);
 
-  const onKey = (key: string) => {
-    if (game !== "playing" || gameComplete) return;
+  const onKey = useCallback((key: string) => {
+    console.log("🔑 onKey called with:", key, "Game state:", game, "Complete:", gameComplete);
+    
+    if (game !== "playing" || gameComplete) {
+      console.log("⚠️ onKey ignored - game not in playing state");
+      return;
+    }
     
     if (key === "ENTER") {
       if (current.length !== 5) {
@@ -222,7 +227,40 @@ export default function WordlePage() {
     } else if (current.length < 5) {
       setCurrent(prev => prev + key);
     }
-  };
+  }, [game, gameComplete, current, answer, rows, states, wordsSet]);
+
+  // Add keyboard event listener
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      console.log("🎹 Keyboard pressed:", event.key, "Game state:", game, "Complete:", gameComplete);
+      
+      if (game !== "playing" || gameComplete) {
+        console.log("⚠️ Ignoring key - game not in playing state");
+        return;
+      }
+      
+      const key = event.key.toUpperCase();
+      
+      // Handle letter keys
+      if (key.match(/[A-Z]/) && key.length === 1) {
+        console.log("📝 Letter key:", key);
+        onKey(key);
+      }
+      // Handle Enter key
+      else if (key === "ENTER") {
+        console.log("⏎ Enter key");
+        onKey("ENTER");
+      }
+      // Handle Backspace key
+      else if (key === "BACKSPACE") {
+        console.log("⌫ Backspace key");
+        onKey("BACKSPACE");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [game, gameComplete, onKey]);
 
   const shareResults = () => {
     const shareText = dailyGameManager.getShareText("wordle");
