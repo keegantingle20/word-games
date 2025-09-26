@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { loadWordleList } from "@/lib/data";
 import type { WordEntry, WordleList } from "@/types/data";
 import confetti from "canvas-confetti";
+import { createRandomnessGenerator } from "@/lib/randomness";
 
 type CellState = "hit" | "near" | "miss" | undefined;
 
@@ -70,6 +71,9 @@ export default function WordlePage() {
       if (raw) statsRef.current = JSON.parse(raw);
     } catch {}
   }, []);
+
+  // Smart randomness generator
+  const [randomnessGenerator] = useState(() => createRandomnessGenerator());
 
   useEffect(() => {
     let ignore = false;

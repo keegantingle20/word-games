@@ -44,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Link href="/wordle" className="hover:opacity-100">Wordle</Link>
                     <Link href="/connections" className="hover:opacity-100">Connections</Link>
                     <Link href="/connections/library" className="hover:opacity-100">My Puzzles</Link>
+                    <Link href="/personalize" className="hover:opacity-100">Personalize</Link>
                   </nav>
                 </div>
                 <ThemeToggle />

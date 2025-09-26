@@ -48,6 +48,9 @@ export default function HomePage() {
           <div className="mb-2 font-semibold">Personal Touch</div>
           <div className="text-sm opacity-80">Tuned to Jessie&apos;s favorite colors and themes.</div>
           <div className="mt-2 h-2 w-full rounded-full bg-gradient-to-r from-pink-500 via-[var(--accent)] to-purple-500"></div>
+          <Link href="/personalize" className="mt-3 inline-block text-sm text-accent hover:underline">
+            Customize Your Experience →
+          </Link>
         </div>
       </section>
     </div>
