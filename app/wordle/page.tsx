@@ -88,27 +88,29 @@ export default function WordlePage() {
         setAnswer(todayWord.word);
         setAnswerEntry(todayWord);
         
-        // Check if already played today
-        const played = dailyGameManager.hasPlayedToday("wordle");
-        setHasPlayedToday(played);
-        
-        if (played) {
-          setGameComplete(true);
-          const gameState = dailyGameManager.getGameState("wordle");
-          if (gameState.won) {
-            setGame("won");
-            setRows(Array(gameState.guesses).fill(""));
-            setStates(Array(gameState.guesses).fill([]));
-          } else {
-            setGame("lost");
-            setRows(Array(6).fill(""));
-            setStates(Array(6).fill([]));
+        // Check if already played today (only on client side)
+        if (typeof window !== "undefined") {
+          const played = dailyGameManager.hasPlayedToday("wordle");
+          setHasPlayedToday(played);
+          
+          if (played) {
+            setGameComplete(true);
+            const gameState = dailyGameManager.getGameState("wordle");
+            if (gameState.won) {
+              setGame("won");
+              setRows(Array(gameState.guesses).fill(""));
+              setStates(Array(gameState.guesses).fill([]));
+            } else {
+              setGame("lost");
+              setRows(Array(6).fill(""));
+              setStates(Array(6).fill([]));
+            }
           }
+          
+          // Get current streak
+          const streaks = dailyGameManager.getStreaks();
+          setStreak(streaks.wordle);
         }
-        
-        // Get current streak
-        const streaks = dailyGameManager.getStreaks();
-        setStreak(streaks.wordle);
       } catch (e) {
         console.error(e);
         setMessage("Failed to load words");
@@ -288,8 +290,7 @@ export default function WordlePage() {
 
         <Keyboard
           onKey={onKey}
-          states={states}
-          disabled={game !== "playing" || gameComplete}
+          keyStates={{}}
         />
 
         {game === "won" && (

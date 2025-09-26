@@ -65,14 +65,18 @@ export default function MiniCrosswordPage() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Check if already played today
-    const played = dailyGameManager.hasPlayedToday("miniCrossword");
-    setHasPlayedToday(played);
-    
-    if (played) {
-      setGameComplete(true);
-      const gameState = dailyGameManager.getGameState("miniCrossword");
-      setCurrentTime(gameState.time);
+    // Only check on client side
+    if (typeof window !== "undefined") {
+      const played = dailyGameManager.hasPlayedToday("miniCrossword");
+      setHasPlayedToday(played);
+      
+      if (played) {
+        setGameComplete(true);
+        const gameState = dailyGameManager.getGameState("miniCrossword");
+        setCurrentTime(gameState.time);
+      } else {
+        initializeGame();
+      }
     } else {
       initializeGame();
     }

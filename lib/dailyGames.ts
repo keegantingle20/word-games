@@ -48,9 +48,9 @@ export class DailyGameManager {
   private loadGameState(): DailyGameState {
     if (typeof window === "undefined") {
       return {
-        wordle: { played: false, won: false, guesses: 0, word: "", date: "" },
-        connections: { played: false, won: false, mistakes: 0, puzzleId: "", date: "" },
-        miniCrossword: { played: false, won: false, time: 0, date: "" },
+        wordle: { played: false, won: false, guesses: 0, word: "", date: this.getTodayString() },
+        connections: { played: false, won: false, mistakes: 0, puzzleId: "", date: this.getTodayString() },
+        miniCrossword: { played: false, won: false, time: 0, date: this.getTodayString() },
       };
     }
 

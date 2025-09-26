@@ -47,21 +47,6 @@ export default function ConnectionsPage() {
   useEffect(() => {
     (async () => {
       try {
-        // Check if already played today
-        const played = dailyGameManager.hasPlayedToday("connections");
-        setHasPlayedToday(played);
-        
-        if (played) {
-          setGameComplete(true);
-          const gameState = dailyGameManager.getGameState("connections");
-          if (gameState.won) {
-            setGameWon(true);
-            setSolved([0, 1, 2, 3]);
-          } else {
-            setGameLost(true);
-          }
-        }
-        
         // Get today's puzzle
         const data = await loadConnectionsPuzzle();
         if (!data) {
@@ -75,9 +60,26 @@ export default function ConnectionsPage() {
         setSolved([]);
         setMistakes(0);
         
-        // Get current streak
-        const streaks = dailyGameManager.getStreaks();
-        setStreak(streaks.connections);
+        // Check if already played today (only on client side)
+        if (typeof window !== "undefined") {
+          const played = dailyGameManager.hasPlayedToday("connections");
+          setHasPlayedToday(played);
+          
+          if (played) {
+            setGameComplete(true);
+            const gameState = dailyGameManager.getGameState("connections");
+            if (gameState.won) {
+              setGameWon(true);
+              setSolved([0, 1, 2, 3]);
+            } else {
+              setGameLost(true);
+            }
+          }
+          
+          // Get current streak
+          const streaks = dailyGameManager.getStreaks();
+          setStreak(streaks.connections);
+        }
       } catch (e) {
         console.error(e);
         setMessage("Failed to load puzzle");
