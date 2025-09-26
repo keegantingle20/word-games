@@ -85,25 +85,32 @@ export default function WordlePage() {
           // Create word set for validation
           const words = new Set(personalList.words.map(w => w.word));
           setWordsSet(words);
-        }
-        
-        // Get today's word directly
-        const todayWord = getTodaysWordleWord();
-        if (ignore) return;
-        
-        setAnswer(todayWord);
-        setAnswerEntry({
-          word: todayWord,
-          categories: ["daily"],
-          metadata: {
-            difficulty: "medium",
-            themes: ["daily"],
-            personal: { note: "Today's word" }
-          }
-        });
-        
-        // Create a simple word set for validation if not already set
-        if (wordsSet.size === 0) {
+          
+          // Get today's word from personal collection
+          const today = new Date();
+          const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+          const index = dayOfYear % personalList.words.length;
+          const todayWord = personalList.words[index].word;
+          
+          setAnswer(todayWord);
+          setAnswerEntry(personalList.words[index]);
+        } else {
+          // Fallback to built-in word
+          const todayWord = getTodaysWordleWord();
+          if (ignore) return;
+          
+          setAnswer(todayWord);
+          setAnswerEntry({
+            word: todayWord,
+            categories: ["daily"],
+            metadata: {
+              difficulty: "medium",
+              themes: ["daily"],
+              personal: { note: "Today's word" }
+            }
+          });
+          
+          // Create a simple word set for validation
           const words = new Set([todayWord]);
           setWordsSet(words);
         }
