@@ -36,13 +36,26 @@ jobs:
           ls -la package-lock.json || echo "package-lock.json not found"
           echo "📋 Package.json contents:"
           cat package.json | head -10
+          echo "🧹 Cleaning any existing node_modules..."
+          rm -rf node_modules || true
 
       - name: Install dependencies
         run: |
           echo "🔍 Checking for lock files..."
           ls -la package*.json
           echo "📦 Installing dependencies..."
-          npm install
+          echo "🔧 Using npm install (no cache to avoid lock file issues)"
+          npm install --no-optional
+
+      - name: Verify installation
+        run: |
+          echo "✅ Verifying installation..."
+          echo "📦 Node modules:"
+          ls -la node_modules | head -5
+          echo "🔧 NPM version:"
+          npm --version
+          echo "📋 Installed packages:"
+          npm list --depth=0 | head -10
 
       - name: Build
         env:
