@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Keyboard from "./Keyboard";
 import { cn } from "@/lib/utils";
-import { getTodaysWordleWord } from "@/lib/data";
+import { getTodaysWordleWord, loadPersonalWordleList } from "@/lib/data";
 import confetti from "canvas-confetti";
 import { dailyGameManager } from "@/lib/dailyGames";
 
@@ -76,6 +76,17 @@ export default function WordlePage() {
     let ignore = false;
     (async () => {
       try {
+        // Load personal word collection first
+        const personalList = await loadPersonalWordleList();
+        if (personalList && !ignore) {
+          setList(personalList);
+          setAllWords(personalList.words);
+          
+          // Create word set for validation
+          const words = new Set(personalList.words.map(w => w.word));
+          setWordsSet(words);
+        }
+        
         // Get today's word directly
         const todayWord = getTodaysWordleWord();
         if (ignore) return;
@@ -91,9 +102,11 @@ export default function WordlePage() {
           }
         });
         
-        // Create a simple word set for validation
-        const words = new Set([todayWord]);
-        setWordsSet(words);
+        // Create a simple word set for validation if not already set
+        if (wordsSet.size === 0) {
+          const words = new Set([todayWord]);
+          setWordsSet(words);
+        }
         
         // Check if already played today (only on client side)
         if (typeof window !== "undefined") {

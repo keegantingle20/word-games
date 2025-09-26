@@ -97,8 +97,56 @@ export function getTodaysWordleWord(): string {
     }
   }
   
+  // Try to load personal collection
+  try {
+    const personalWords = loadPersonalWordleWords();
+    if (personalWords.length > 0) {
+      const today = new Date();
+      const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+      const index = dayOfYear % personalWords.length;
+      return personalWords[index];
+    }
+  } catch (error) {
+    console.warn("Failed to load personal word collection:", error);
+  }
+  
   // Fallback to built-in words
   return dailyPuzzleGenerator.getTodaysWordle();
+}
+
+// Load personal word collection
+export function loadPersonalWordleWords(): string[] {
+  if (typeof window === "undefined") return [];
+  
+  try {
+    // Try to load from localStorage first
+    const stored = localStorage.getItem("personalWordleWords");
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (error) {
+    console.warn("Failed to load personal words from localStorage:", error);
+  }
+  
+  return [];
+}
+
+// Load personal word collection from JSON file
+export async function loadPersonalWordleList(): Promise<WordleList | null> {
+  try {
+    const list = await loadWordleList("/data/wordle/personal-collection.json");
+    
+    // Cache the words in localStorage for faster access
+    if (typeof window !== "undefined") {
+      const words = list.words.map(w => w.word);
+      localStorage.setItem("personalWordleWords", JSON.stringify(words));
+    }
+    
+    return list;
+  } catch (error) {
+    console.warn("Failed to load personal word collection:", error);
+    return null;
+  }
 }
 
 // Get today's connections puzzle directly
