@@ -159,87 +159,105 @@ export default function WordlePage() {
   }, []);
 
   const onKey = useCallback((key: string) => {
-    console.log("🔑 onKey called with:", key, "Game state:", game, "Complete:", gameComplete);
+    console.log("🔑 onKey called with:", key);
+    console.log("🔍 Current game state:", { game, gameComplete, current, answer });
     
-    if (game !== "playing" || gameComplete) {
-      console.log("⚠️ onKey ignored - game not in playing state");
-      return;
-    }
-    
-    if (key === "ENTER") {
-      if (current.length !== 5) {
-        setMessage("Not enough letters");
-        setTimeout(() => setMessage(""), 2000);
-        return;
-      }
-      if (!wordsSet.has(current)) {
-        setMessage("Not in word list");
-        setTimeout(() => setMessage(""), 2000);
-        return;
-      }
-      
-      const newRows = [...rows, current];
-      const newStates = [...states, evaluateGuess(current, answer)];
-      setRows(newRows);
-      setStates(newStates);
-      
-      if (current === answer) {
-        setGame("won");
-        setMessage("Correct!");
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    // Use functional updates to avoid dependency issues
+    setGame(currentGame => {
+      setGameComplete(currentComplete => {
+        if (currentGame !== "playing" || currentComplete) {
+          console.log("⚠️ onKey ignored - game not in playing state");
+          return currentComplete;
+        }
         
-        // Mark game as won
-        dailyGameManager.markGamePlayed("wordle", true, { 
-          guesses: newRows.length, 
-          word: answer 
-        });
-        setGameComplete(true);
+        if (key === "ENTER") {
+          setCurrent(currentWord => {
+            if (currentWord.length !== 5) {
+              setMessage("Not enough letters");
+              setTimeout(() => setMessage(""), 2000);
+              return currentWord;
+            }
+            
+            setWordsSet(currentWordsSet => {
+              if (!currentWordsSet.has(currentWord)) {
+                setMessage("Not in word list");
+                setTimeout(() => setMessage(""), 2000);
+                return currentWordsSet;
+              }
+              
+              setRows(currentRows => {
+                setStates(currentStates => {
+                  const newRows = [...currentRows, currentWord];
+                  const newStates = [...currentStates, evaluateGuess(currentWord, answer)];
+                  
+                  if (currentWord === answer) {
+                    setGame("won");
+                    setMessage("Correct!");
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    
+                    // Mark game as won
+                    dailyGameManager.markGamePlayed("wordle", true, { 
+                      guesses: newRows.length, 
+                      word: answer 
+                    });
+                    setGameComplete(true);
+                    
+                    // Update stats
+                    statsRef.current.games++;
+                    statsRef.current.wins++;
+                    statsRef.current.streak++;
+                    statsRef.current.maxStreak = Math.max(statsRef.current.maxStreak, statsRef.current.streak);
+                    statsRef.current.dist[newRows.length - 1]++;
+                    localStorage.setItem("stats", JSON.stringify(statsRef.current));
+                    
+                    setStreak(statsRef.current.streak);
+                  } else if (newRows.length === 6) {
+                    setGame("lost");
+                    setMessage(`The word was ${answer.toUpperCase()}`);
+                    
+                    // Mark game as lost
+                    dailyGameManager.markGamePlayed("wordle", false, { 
+                      guesses: 6, 
+                      word: answer 
+                    });
+                    setGameComplete(true);
+                    
+                    // Update stats
+                    statsRef.current.games++;
+                    statsRef.current.streak = 0;
+                    localStorage.setItem("stats", JSON.stringify(statsRef.current));
+                    
+                    setStreak(0);
+                  }
+                  
+                  setRows(newRows);
+                  setStates(newStates);
+                  return newStates;
+                });
+                return newRows;
+              });
+              
+              return currentWordsSet;
+            });
+            
+            return "";
+          });
+        } else if (key === "BACKSPACE") {
+          setCurrent(prev => prev.slice(0, -1));
+        } else if (key.match(/[A-Z]/) && key.length === 1) {
+          setCurrent(prev => prev.length < 5 ? prev + key : prev);
+        }
         
-        // Update stats
-        statsRef.current.games++;
-        statsRef.current.wins++;
-        statsRef.current.streak++;
-        statsRef.current.maxStreak = Math.max(statsRef.current.maxStreak, statsRef.current.streak);
-        statsRef.current.dist[newRows.length - 1]++;
-        localStorage.setItem("stats", JSON.stringify(statsRef.current));
-        
-        setStreak(statsRef.current.streak);
-      } else if (newRows.length === 6) {
-        setGame("lost");
-        setMessage(`The word was ${answer.toUpperCase()}`);
-        
-        // Mark game as lost
-        dailyGameManager.markGamePlayed("wordle", false, { 
-          guesses: 6, 
-          word: answer 
-        });
-        setGameComplete(true);
-        
-        // Update stats
-        statsRef.current.games++;
-        statsRef.current.streak = 0;
-        localStorage.setItem("stats", JSON.stringify(statsRef.current));
-        
-        setStreak(0);
-      }
-      
-      setCurrent("");
-    } else if (key === "BACKSPACE") {
-      setCurrent(prev => prev.slice(0, -1));
-    } else if (current.length < 5) {
-      setCurrent(prev => prev + key);
-    }
-  }, [game, gameComplete, current, answer, rows, states, wordsSet]);
+        return currentComplete;
+      });
+      return currentGame;
+    });
+  }, [answer]);
 
   // Add keyboard event listener
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      console.log("🎹 Keyboard pressed:", event.key, "Game state:", game, "Complete:", gameComplete);
-      
-      if (game !== "playing" || gameComplete) {
-        console.log("⚠️ Ignoring key - game not in playing state");
-        return;
-      }
+      console.log("🎹 Keyboard pressed:", event.key);
       
       const key = event.key.toUpperCase();
       
@@ -262,7 +280,7 @@ export default function WordlePage() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [game, gameComplete, onKey]);
+  }, [onKey]);
 
   const shareResults = () => {
     const shareText = dailyGameManager.getShareText("wordle");
@@ -369,6 +387,16 @@ export default function WordlePage() {
           onKey={onKey}
           keyStates={{}}
         />
+        
+        {/* Debug test button */}
+        <div className="mt-4 text-center">
+          <button 
+            onClick={() => onKey("A")}
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
+            Test Key A
+          </button>
+        </div>
 
         {game === "won" && (
           <motion.div
