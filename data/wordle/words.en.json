@@ -1,0 +1,22 @@
+{
+  "id": "words.en",
+  "language": "en",
+  "title": "English Wordle List",
+  "description": "Sample 5-letter words with categories and metadata.",
+  "metadata": {
+    "difficulty": "medium",
+    "themes": ["general", "starter"],
+    "personal": {
+      "note": "First custom list",
+      "tags": ["demo", "english"]
+    },
+    "createdAt": "2025-09-23T00:00:00.000Z"
+  },
+  "words": [
+    { "word": "crane", "categories": ["animals"], "metadata": { "difficulty": "easy", "themes": ["nature"] } },
+    { "word": "slice", "categories": ["verbs", "kitchen"], "metadata": { "difficulty": "easy" } },
+    { "word": "proud", "categories": ["feelings"], "metadata": { "themes": ["emotion"], "personal": { "note": "Graduation day" } } },
+    { "word": "ghost", "categories": ["spooky"], "metadata": { "difficulty": "medium", "themes": ["halloween"] } },
+    { "word": "flint", "categories": ["materials"], "metadata": { "difficulty": "medium" } }
+  ]
+}

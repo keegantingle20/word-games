@@ -1,0 +1,20 @@
+{
+  "id": "connections.dates",
+  "title": "Date Nights",
+  "description": "Activities, restaurants, movies, and memories.",
+  "groups": [
+    { "title": "Dinner Spots", "color": "bg-yellow-400", "hint": "Where we ate", "description": "Go-to places for a meal", "personal": { "note": "Reservations made" }, "words": ["diner","cuban","ramen","pizza"] },
+    { "title": "Sweet Treats", "color": "bg-green-500", "hint": "Dessert time", "description": "Sugary happiness", "personal": { "note": "Always room for dessert" }, "words": ["gelat","mochi","donut","torte"] },
+    { "title": "Cozy Activities", "color": "bg-blue-500", "hint": "Stay-in plans", "description": "Homebody classics", "personal": { "note": "Blanket + tea" }, "words": ["movie","games","notes","cider"] },
+    { "title": "Outings", "color": "bg-purple-500", "hint": "We went out", "description": "Outside the house", "personal": { "note": "Get your shoes" }, "words": ["dance","bikes","river","photo"] }
+  ],
+  "metadata": {
+    "difficulty": "easy",
+    "themes": ["dates","cozy"],
+    "personal": { "note": "Our favorite kind of nights" },
+    "createdAt": "2025-09-23T00:00:00.000Z",
+    "tags": ["food","fun","home"]
+  }
+}
+
+

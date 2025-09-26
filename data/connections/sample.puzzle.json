@@ -1,0 +1,17 @@
+{
+  "id": "puzzle.sample",
+  "title": "Sample Connections",
+  "description": "Four groups of four words.",
+  "metadata": {
+    "difficulty": "easy",
+    "themes": ["starter"],
+    "personal": { "note": "Inspired by weekend brunch" },
+    "createdAt": "2025-09-23T00:00:00.000Z"
+  },
+  "groups": [
+    { "title": "Celestial", "color": "bg-blue-500", "words": ["sun","moon","star","comet"] },
+    { "title": "Tree Parts", "color": "bg-green-500", "words": ["root","bark","trunk","branch"] },
+    { "title": "Kitchen Verbs", "color": "bg-yellow-400", "words": ["boil","chop","stir","bake"] },
+    { "title": "Synonyms of Quick", "color": "bg-purple-500", "words": ["rapid","swift","fast","hasty"] }
+  ]
+}

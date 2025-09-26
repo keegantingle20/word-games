@@ -1,0 +1,40 @@
+{
+  "id": "foods.en",
+  "language": "en",
+  "title": "Favorite Foods",
+  "description": "Dishes and spots we crave.",
+  "metadata": {
+    "difficulty": "easy",
+    "themes": ["food", "cozy"],
+    "personal": { "note": "Date night picks" },
+    "createdAt": "2025-09-23T00:00:00.000Z"
+  },
+  "words": [
+    { "word": "tacos", "categories": ["mex"], "metadata": { "personal": { "note": "Truck on 5th" } } },
+    { "word": "ramen", "categories": ["noodl"], "metadata": { "personal": { "note": "Rainy day bowl" } } },
+    { "word": "sushi", "categories": ["japan"], "metadata": { "personal": { "note": "Bar seats" } } },
+    { "word": "pizza", "categories": ["italy"], "metadata": { "personal": { "note": "Extra basil" } } },
+    { "word": "gelat", "categories": ["sweet"], "metadata": { "personal": { "note": "Three scoops" } } },
+    { "word": "bagel", "categories": ["bake"], "metadata": { "personal": { "note": "Sunday run" } } },
+    { "word": "curry", "categories": ["spice"], "metadata": { "personal": { "note": "Mango lassi" } } },
+    { "word": "bento", "categories": ["japan"], "metadata": { "personal": { "note": "Park lunch" } } },
+    { "word": "gnoci", "categories": ["italy"], "metadata": { "personal": { "note": "Soft pillows" } } },
+    { "word": "torte", "categories": ["cake"], "metadata": { "personal": { "note": "Birthday slice" } } },
+    { "word": "salad", "categories": ["fresh"], "metadata": { "personal": { "note": "Farmers' box" } } },
+    { "word": "toast", "categories": ["brunch"], "metadata": { "personal": { "note": "Avocado art" } } },
+    { "word": "steak", "categories": ["dine"], "metadata": { "personal": { "note": "Anniver. spot" } } },
+    { "word": "scone", "categories": ["bake"], "metadata": { "personal": { "note": "Tea time" } } },
+    { "word": "cacao", "categories": ["sweet"], "metadata": { "personal": { "note": "Hot cocoa" } } },
+    { "word": "chili", "categories": ["spice"], "metadata": { "personal": { "note": "Fall pot" } } },
+    { "word": "nacho", "categories": ["share"], "metadata": { "personal": { "note": "Game night" } } },
+    { "word": "mochi", "categories": ["sweet"], "metadata": { "personal": { "note": "Freezer stash" } } },
+    { "word": "pesto", "categories": ["italy"], "metadata": { "personal": { "note": "Garden basil" } } },
+    { "word": "donut", "categories": ["sweet"], "metadata": { "personal": { "note": "Early queue" } } },
+    { "word": "cuban", "categories": ["sand"], "metadata": { "personal": { "note": "Pressed perfect" } } },
+    { "word": "udons", "categories": ["noodl"], "metadata": { "personal": { "note": "Slurp!" } } },
+    { "word": "wings", "categories": ["share"], "metadata": { "personal": { "note": "Messy hands" } } },
+    { "word": "cukes", "categories": ["fresh"], "metadata": { "personal": { "note": "Pickle batch" } } }
+  ]
+}
+
+

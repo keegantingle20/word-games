@@ -1,0 +1,20 @@
+{
+  "id": "connections.relationships",
+  "title": "Relationships & Memories",
+  "description": "Groups about people, places, things, experiences.",
+  "groups": [
+    { "title": "Family Titles", "color": "bg-green-500", "hint": "What we call relatives", "description": "Common family roles", "personal": { "note": "Holiday roll call" }, "words": ["uncle","aunty","mamma","pappa"] },
+    { "title": "Travel Moments", "color": "bg-yellow-400", "hint": "Snapshots from trips", "description": "Short scenes from the road", "personal": { "note": "Our camera roll" }, "words": ["beach","harbr","trail","plaza"] },
+    { "title": "Nicknames", "color": "bg-blue-500", "hint": "Terms of endearment", "description": "What we call each other", "personal": { "note": "Pet names forever" }, "words": ["buddy","teddy","queen","jessy"] },
+    { "title": "Inside Jokes", "color": "bg-purple-500", "hint": "Only we get it", "description": "Silly words that make us laugh", "personal": { "note": "Giggles guaranteed" }, "words": ["short","giant","bffls","palss"] }
+  ],
+  "metadata": {
+    "difficulty": "medium",
+    "themes": ["relationships","memories"],
+    "personal": { "note": "Warm and fuzzy set" },
+    "createdAt": "2025-09-23T00:00:00.000Z",
+    "tags": ["family","funny","travel"]
+  }
+}
+
+

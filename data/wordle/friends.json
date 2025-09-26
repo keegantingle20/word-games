@@ -1,0 +1,40 @@
+{
+  "id": "friends.en",
+  "language": "en",
+  "title": "Friends & Nicknames",
+  "description": "People we love and what we call them.",
+  "metadata": {
+    "difficulty": "medium",
+    "themes": ["friends", "family"],
+    "personal": { "note": "Inside circle" },
+    "createdAt": "2025-09-23T00:00:00.000Z"
+  },
+  "words": [
+    { "word": "jessy", "categories": ["nick"], "metadata": { "personal": { "note": "Her nickname" } } },
+    { "word": "keegs", "categories": ["nick"], "metadata": { "personal": { "note": "Your nickname" } } },
+    { "word": "mamma", "categories": ["fam"], "metadata": { "personal": { "note": "Sunday calls" } } },
+    { "word": "pappa", "categories": ["fam"], "metadata": { "personal": { "note": "BBQ master" } } },
+    { "word": "sammy", "categories": ["friend"], "metadata": { "personal": { "note": "Hike buddy" } } },
+    { "word": "ellie", "categories": ["friend"], "metadata": { "personal": { "note": "Coffee dates" } } },
+    { "word": "danny", "categories": ["friend"], "metadata": { "personal": { "note": "Board games" } } },
+    { "word": "nina", "categories": ["friend"], "metadata": { "personal": { "note": "Brunch crew" } } },
+    { "word": "tito", "categories": ["fam"], "metadata": { "personal": { "note": "Holiday stories" } } },
+    { "word": "lola", "categories": ["fam"], "metadata": { "personal": { "note": "Cookie tins" } } },
+    { "word": "coach", "categories": ["title"], "metadata": { "personal": { "note": "Gym pal" } } },
+    { "word": "buddy", "categories": ["nick"], "metadata": { "personal": { "note": "Pet name" } } },
+    { "word": "teddy", "categories": ["nick"], "metadata": { "personal": { "note": "Hug giver" } } },
+    { "word": "queen", "categories": ["title"], "metadata": { "personal": { "note": "Her vibes" } } },
+    { "word": "short", "categories": ["joke"], "metadata": { "personal": { "note": "Inside joke" } } },
+    { "word": "giant", "categories": ["joke"], "metadata": { "personal": { "note": "Inside joke" } } },
+    { "word": "bffls", "categories": ["text"], "metadata": { "personal": { "note": "Old chat" } } },
+    { "word": "palss", "categories": ["text"], "metadata": { "personal": { "note": "Silly typo" } } },
+    { "word": "cuzns", "categories": ["fam"], "metadata": { "personal": { "note": "Cousins group" } } },
+    { "word": "sissy", "categories": ["fam"], "metadata": { "personal": { "note": "Sister calls" } } },
+    { "word": "brosy", "categories": ["fam"], "metadata": { "personal": { "note": "Brother texts" } } },
+    { "word": "uncle", "categories": ["fam"], "metadata": { "personal": { "note": "BBQ tales" } } },
+    { "word": "aunty", "categories": ["fam"], "metadata": { "personal": { "note": "Tea chats" } } },
+    { "word": "peeps", "categories": ["group"], "metadata": { "personal": { "note": "Our people" } } }
+  ]
+}
+
+

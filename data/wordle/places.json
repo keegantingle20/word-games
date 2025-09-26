@@ -1,0 +1,40 @@
+{
+  "id": "places.en",
+  "language": "en",
+  "title": "Places We've Been",
+  "description": "Cities and spots meaningful to us.",
+  "metadata": {
+    "difficulty": "medium",
+    "themes": ["travel", "us"],
+    "personal": { "note": "Trip highlights" },
+    "createdAt": "2025-09-23T00:00:00.000Z"
+  },
+  "words": [
+    { "word": "paris", "categories": ["city"], "metadata": { "personal": { "note": "First big trip" } } },
+    { "word": "rome", "categories": ["city"], "metadata": { "personal": { "note": "Gelato hunt" } } },
+    { "word": "kyoto", "categories": ["city"], "metadata": { "personal": { "note": "Temples in rain" } } },
+    { "word": "tokyo", "categories": ["city"], "metadata": { "personal": { "note": "Arcade night" } } },
+    { "word": "miami", "categories": ["city"], "metadata": { "personal": { "note": "Art deco walk" } } },
+    { "word": "austi", "categories": ["city"], "metadata": { "personal": { "note": "Live music" } } },
+    { "word": "maui", "categories": ["isle"], "metadata": { "personal": { "note": "Hana road" } } },
+    { "word": "tulum", "categories": ["beach"], "metadata": { "personal": { "note": "Cenote swim" } } },
+    { "word": "praga", "categories": ["city"], "metadata": { "personal": { "note": "Bridge at dawn" } } },
+    { "word": "zuric", "categories": ["city"], "metadata": { "personal": { "note": "Lake loop" } } },
+    { "word": "siena", "categories": ["town"], "metadata": { "personal": { "note": "Tuscan day" } } },
+    { "word": "milan", "categories": ["city"], "metadata": { "personal": { "note": "Duomo view" } } },
+    { "word": "sofia", "categories": ["city"], "metadata": { "personal": { "note": "Hidden cafe" } } },
+    { "word": "porto", "categories": ["city"], "metadata": { "personal": { "note": "River boats" } } },
+    { "word": "berln", "categories": ["city"], "metadata": { "personal": { "note": "Street art" } } },
+    { "word": "seoul", "categories": ["city"], "metadata": { "personal": { "note": "Night market" } } },
+    { "word": "bali", "categories": ["isle"], "metadata": { "personal": { "note": "Rice fields" } } },
+    { "word": "alley", "categories": ["spot"], "metadata": { "personal": { "note": "Mural photos" } } },
+    { "word": "diner", "categories": ["food"], "metadata": { "personal": { "note": "Late pancakes" } } },
+    { "word": "trail", "categories": ["hike"], "metadata": { "personal": { "note": "Switchbacks!" } } },
+    { "word": "plaza", "categories": ["square"], "metadata": { "personal": { "note": "Street band" } } },
+    { "word": "harbr", "categories": ["water"], "metadata": { "personal": { "note": "Ferry ride" } } },
+    { "word": "crest", "categories": ["peak"], "metadata": { "personal": { "note": "Windy view" } } },
+    { "word": "costa", "categories": ["coast"], "metadata": { "personal": { "note": "Cliff walk" } } }
+  ]
+}
+
+
