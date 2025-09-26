@@ -39,12 +39,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-black/30 border-b border-black/10 dark:border-white/10">
               <div className="container-page flex h-14 items-center justify-between">
                 <div className="flex items-center gap-6">
-                  <Link href="/" className="font-semibold tracking-tight">For Jessie ❤️</Link>
+                  <Link href="/" className="font-semibold tracking-tight text-slate-900 dark:text-slate-100">Word Games</Link>
                   <nav className="hidden sm:flex items-center gap-4 text-sm opacity-80">
                     <Link href="/wordle" className="hover:opacity-100">Wordle</Link>
                     <Link href="/connections" className="hover:opacity-100">Connections</Link>
-                    <Link href="/connections/library" className="hover:opacity-100">My Puzzles</Link>
-                    <Link href="/personalize" className="hover:opacity-100">Personalize</Link>
+                    <Link href="/mini-crossword" className="hover:opacity-100">Mini Crossword</Link>
                   </nav>
                 </div>
                 <ThemeToggle />

@@ -1,67 +1,139 @@
+"use client";
 import GameCard from "@/components/GameCard";
 import Link from "next/link";
-
-function getStats() {
-  if (typeof window === "undefined") return null;
-  try { return JSON.parse(localStorage.getItem("stats") || "null"); } catch { return null; }
-}
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { dailyGameManager } from "@/lib/dailyGames";
 
 export default function HomePage() {
+  const [stats, setStats] = useState({
+    wordle: { played: false, won: false, streak: 0 },
+    connections: { played: false, won: false, streak: 0 },
+    miniCrossword: { played: false, won: false, streak: 0 },
+  });
+
+  useEffect(() => {
+    const wordlePlayed = dailyGameManager.hasPlayedToday("wordle");
+    const connectionsPlayed = dailyGameManager.hasPlayedToday("connections");
+    const miniCrosswordPlayed = dailyGameManager.hasPlayedToday("miniCrossword");
+    
+    const streaks = dailyGameManager.getStreaks();
+    
+    setStats({
+      wordle: { 
+        played: wordlePlayed, 
+        won: wordlePlayed ? dailyGameManager.getGameState("wordle").won : false,
+        streak: streaks.wordle 
+      },
+      connections: { 
+        played: connectionsPlayed, 
+        won: connectionsPlayed ? dailyGameManager.getGameState("connections").won : false,
+        streak: streaks.connections 
+      },
+      miniCrossword: { 
+        played: miniCrosswordPlayed, 
+        won: miniCrosswordPlayed ? dailyGameManager.getGameState("miniCrossword").won : false,
+        streak: streaks.miniCrossword 
+      },
+    });
+  }, []);
+
   return (
     <div className="container-page py-10 sm:py-14">
       {/* Hero */}
-      <section className="mb-8 sm:mb-12">
-        <div className="inline-flex items-center gap-2 rounded-full bg-black/5 dark:bg-white/10 px-3 py-1 text-sm">
-          <span>Welcome, Jessie</span>
-          <span>❤️</span>
-        </div>
-        <h1 className="mt-3 text-3xl sm:text-5xl font-bold tracking-tight">
-          Your daily word games, with a personal touch
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-10 sm:mb-16 text-center"
+      >
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
+          Word Games
         </h1>
-        <p className="mt-3 max-w-2xl opacity-80">
-          Play Wordle and Connections tailored to your favorite themes and memories.
+        <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          Play today's puzzles. New ones available every day.
         </p>
-        <div className="mt-4 flex gap-3">
-          <Link href="/wordle" className="rounded-xl px-4 py-2 bg-[var(--accent)] text-white">Play Wordle</Link>
-          <Link href="/connections" className="rounded-xl px-4 py-2 border border-black/10 dark:border-white/10">Play Connections</Link>
+      </motion.section>
+
+      {/* Games Grid */}
+      <section className="mb-10 sm:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <GameCard
+            href="/wordle"
+            title="Wordle"
+            description="Guess the 5-letter word with 6 chances"
+            accent="accent"
+            status={stats.wordle.played ? (stats.wordle.won ? "won" : "lost") : "available"}
+            streak={stats.wordle.streak}
+          />
+          <GameCard
+            href="/connections"
+            title="Connections"
+            description="Group words that share a common thread"
+            accent="success"
+            status={stats.connections.played ? (stats.connections.won ? "won" : "lost") : "available"}
+            streak={stats.connections.streak}
+          />
+          <GameCard
+            href="/mini-crossword"
+            title="Mini Crossword"
+            description="Solve this bite-sized puzzle in just a few minutes"
+            accent="warn"
+            status={stats.miniCrossword.played ? (stats.miniCrossword.won ? "won" : "lost") : "available"}
+            streak={stats.miniCrossword.streak}
+          />
         </div>
       </section>
 
-      {/* Game cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-10">
-        <GameCard href="/wordle" title="Wordle" description="Guess the word in 6 tries." />
-        <GameCard href="/connections" title="Connections" description="Find 4 groups of 4 related words." />
-      </section>
+      {/* Stats Section */}
+      <section>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6 text-center">
+          Your Stats
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.1 }}
+            className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
+          >
+            <h3 className="text-lg font-semibold mb-2">Wordle</h3>
+            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
+              <div>Current Streak: {stats.wordle.streak}</div>
+              <div>Today: {stats.wordle.played ? (stats.wordle.won ? "✅ Won" : "❌ Lost") : "⏳ Not played"}</div>
+            </div>
+          </motion.div>
 
-      {/* Recent activity */}
-      <section className="grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl p-5 border border-black/10 dark:border-white/10 bg-[var(--card)]">
-          <div className="mb-2 font-semibold">Recent Activity</div>
-          <div className="text-sm opacity-80">Wordle stats pull from your device</div>
-          <div className="mt-3 grid grid-cols-3 gap-3 text-center">
-            <Stat label="Games" value={<span id="stat-games">—</span>} />
-            <Stat label="Wins" value={<span id="stat-wins">—</span>} />
-            <Stat label="Streak" value={<span id="stat-streak">—</span>} />
-          </div>
-        </div>
-        <div className="rounded-2xl p-5 border border-black/10 dark:border-white/10 bg-[var(--card)]">
-          <div className="mb-2 font-semibold">Personal Touch</div>
-          <div className="text-sm opacity-80">Tuned to Jessie&apos;s favorite colors and themes.</div>
-          <div className="mt-2 h-2 w-full rounded-full bg-gradient-to-r from-pink-500 via-[var(--accent)] to-purple-500"></div>
-          <Link href="/personalize" className="mt-3 inline-block text-sm text-accent hover:underline">
-            Customize Your Experience →
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.2 }}
+            className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
+          >
+            <h3 className="text-lg font-semibold mb-2">Connections</h3>
+            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
+              <div>Current Streak: {stats.connections.streak}</div>
+              <div>Today: {stats.connections.played ? (stats.connections.won ? "✅ Won" : "❌ Lost") : "⏳ Not played"}</div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.3 }}
+            className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
+          >
+            <h3 className="text-lg font-semibold mb-2">Mini Crossword</h3>
+            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
+              <div>Current Streak: {stats.miniCrossword.streak}</div>
+              <div>Today: {stats.miniCrossword.played ? (stats.miniCrossword.won ? "✅ Won" : "❌ Lost") : "⏳ Not played"}</div>
+            </div>
+          </motion.div>
         </div>
       </section>
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div>
-      <div className="text-2xl font-bold">{value}</div>
-      <div className="text-xs opacity-70">{label}</div>
     </div>
   );
 }
