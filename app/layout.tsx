@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -7,12 +7,15 @@ import RegisterSW from "@/components/RegisterSW";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
+
 export const metadata: Metadata = {
   title: "Jessie's Games",
   description: "Play today's puzzles. New ones available every day.",
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${process.env.PORT || 3000}`),
   manifest: `${basePath}/manifest.webmanifest`,
-  themeColor: "#ffffff",
   openGraph: {
     title: "Jessie's Games",
     description: "Play today's puzzles. New ones available every day.",

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { getTodaysWordleWord, loadPersonalWordleList } from "@/lib/data";
 import confetti from "canvas-confetti";
 import { dailyGameManager } from "@/lib/dailyGames";
+import type { WordleList, WordEntry } from "@/types/data";
 
 type CellState = "hit" | "near" | "miss" | undefined;
 type GameState = "playing" | "won" | "lost";
@@ -135,8 +136,9 @@ export default function WordlePage() {
             const gameState = dailyGameManager.getGameState("wordle");
             if (gameState.won) {
               setGame("won");
-              setRows(Array(gameState.guesses).fill(""));
-              setStates(Array(gameState.guesses).fill([]));
+              const guesses = 'guesses' in gameState ? gameState.guesses : 6;
+              setRows(Array(guesses).fill(""));
+              setStates(Array(guesses).fill([]));
             } else {
               setGame("lost");
               setRows(Array(6).fill(""));
