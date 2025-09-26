@@ -163,7 +163,6 @@ export default function WordlePage() {
   const onKey = useCallback((key: string) => {
     console.log("🔑 onKey called with:", key);
     console.log("🔍 Current game state:", { game, gameComplete, current, answer });
-    alert(`onKey called with: ${key}`); // Temporary alert for debugging
     
     // Simple test - just add letter to current word
     if (key === "A" || key === "a") {
@@ -249,6 +248,11 @@ export default function WordlePage() {
 
   // Test if onKey function is defined
   console.log("🔧 onKey function defined:", typeof onKey);
+
+  // Watch current state changes
+  useEffect(() => {
+    console.log("📝 Current state changed to:", current);
+  }, [current]);
 
   // Add keyboard event listener
   useEffect(() => {
@@ -353,7 +357,8 @@ export default function WordlePage() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="flex gap-2">
               {Array.from({ length: 5 }).map((_, j) => {
-                const letter = rows[i]?.[j] || "";
+                // Show current word being typed in the first empty row
+                const letter = rows[i]?.[j] || (i === rows.length ? current[j] || "" : "");
                 const state = states[i]?.[j];
                 const isShaking = shakeRow === i;
                 
