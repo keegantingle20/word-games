@@ -21,6 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Verify files
         run: |
           echo "📁 Current directory contents:"
@@ -31,12 +36,6 @@ jobs:
           ls -la package-lock.json || echo "package-lock.json not found"
           echo "📋 Package.json contents:"
           cat package.json | head -10
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
         run: |
