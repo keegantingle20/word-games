@@ -76,9 +76,14 @@ export default function WordlePage() {
     let ignore = false;
     (async () => {
       try {
+        console.log("🎮 Wordle page loading...");
+        
         // Load personal word collection first
         const personalList = await loadPersonalWordleList();
+        console.log("📚 Personal list result:", personalList ? `${personalList.words.length} words` : "null");
+        
         if (personalList && !ignore) {
+          console.log("✅ Using personal word collection");
           setList(personalList);
           setAllWords(personalList.words);
           
@@ -92,12 +97,17 @@ export default function WordlePage() {
           const index = dayOfYear % personalList.words.length;
           const todayWord = personalList.words[index].word;
           
+          console.log(`🎯 Today's word from personal collection: ${todayWord} (day ${dayOfYear}, index ${index})`);
+          
           setAnswer(todayWord);
           setAnswerEntry(personalList.words[index]);
         } else {
+          console.log("⚠️ Falling back to built-in words");
           // Fallback to built-in word
           const todayWord = getTodaysWordleWord();
           if (ignore) return;
+          
+          console.log(`🎯 Today's word from built-in: ${todayWord}`);
           
           setAnswer(todayWord);
           setAnswerEntry({

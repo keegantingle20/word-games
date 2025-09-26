@@ -122,9 +122,34 @@ export function loadPersonalWordleWords(): string[] {
 export async function loadPersonalWordleList(): Promise<WordleList | null> {
   try {
     console.log("🔄 Loading personal word collection...");
-    const list = await loadWordleList("/data/wordle/personal-collection.json");
     
-    console.log(`✅ Loaded ${list.words.length} words from personal collection`);
+    // Try different paths to find the file
+    const possiblePaths = [
+      "/data/wordle/personal-collection.json",
+      "/word-games/data/wordle/personal-collection.json",
+      "./data/wordle/personal-collection.json"
+    ];
+    
+    let list = null;
+    let usedPath = "";
+    
+    for (const path of possiblePaths) {
+      try {
+        console.log(`🔍 Trying path: ${path}`);
+        list = await loadWordleList(path);
+        usedPath = path;
+        console.log(`✅ Successfully loaded from: ${path}`);
+        break;
+      } catch (pathError) {
+        console.log(`❌ Failed to load from ${path}:`, pathError);
+      }
+    }
+    
+    if (!list) {
+      throw new Error("Could not load personal word collection from any path");
+    }
+    
+    console.log(`✅ Loaded ${list.words.length} words from personal collection (${usedPath})`);
     
     // Cache the words in localStorage for faster access
     if (typeof window !== "undefined") {
