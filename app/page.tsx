@@ -13,127 +13,107 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    const wordlePlayed = dailyGameManager.hasPlayedToday("wordle");
-    const connectionsPlayed = dailyGameManager.hasPlayedToday("connections");
-    const miniCrosswordPlayed = dailyGameManager.hasPlayedToday("miniCrossword");
-    
-    const streaks = dailyGameManager.getStreaks();
-    
-    setStats({
-      wordle: { 
-        played: wordlePlayed, 
-        won: wordlePlayed ? dailyGameManager.getGameState("wordle").won : false,
-        streak: streaks.wordle 
-      },
-      connections: { 
-        played: connectionsPlayed, 
-        won: connectionsPlayed ? dailyGameManager.getGameState("connections").won : false,
-        streak: streaks.connections 
-      },
-      miniCrossword: { 
-        played: miniCrosswordPlayed, 
-        won: miniCrosswordPlayed ? dailyGameManager.getGameState("miniCrossword").won : false,
-        streak: streaks.miniCrossword 
-      },
-    });
+    if (typeof window !== "undefined") {
+      const wordlePlayed = dailyGameManager.hasPlayedToday("wordle");
+      const connectionsPlayed = dailyGameManager.hasPlayedToday("connections");
+      const miniCrosswordPlayed = dailyGameManager.hasPlayedToday("miniCrossword");
+      
+      const streaks = dailyGameManager.getStreaks();
+      
+      setStats({
+        wordle: { 
+          played: wordlePlayed, 
+          won: wordlePlayed ? dailyGameManager.getGameState("wordle").won : false,
+          streak: streaks.wordle 
+        },
+        connections: { 
+          played: connectionsPlayed, 
+          won: connectionsPlayed ? dailyGameManager.getGameState("connections").won : false,
+          streak: streaks.connections 
+        },
+        miniCrossword: { 
+          played: miniCrosswordPlayed, 
+          won: miniCrosswordPlayed ? dailyGameManager.getGameState("miniCrossword").won : false,
+          streak: streaks.miniCrossword 
+        },
+      });
+    }
   }, []);
 
   return (
-    <div className="container-page py-10 sm:py-14">
-      {/* Hero */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-10 sm:mb-16 text-center"
-      >
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Hero Section */}
+      <div className="text-center mb-16">
+        <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">
           Word Games
         </h1>
-        <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+        <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
           Play today's puzzles. New ones available every day.
         </p>
-      </motion.section>
+      </div>
 
       {/* Games Grid */}
-      <section className="mb-10 sm:mb-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <GameCard
-            href="/wordle"
-            title="Wordle"
-            description="Guess the 5-letter word with 6 chances"
-            accent="accent"
-            status={stats.wordle.played ? (stats.wordle.won ? "won" : "lost") : "available"}
-            streak={stats.wordle.streak}
-          />
-          <GameCard
-            href="/connections"
-            title="Connections"
-            description="Group words that share a common thread"
-            accent="success"
-            status={stats.connections.played ? (stats.connections.won ? "won" : "lost") : "available"}
-            streak={stats.connections.streak}
-          />
-          <GameCard
-            href="/mini-crossword"
-            title="Mini Crossword"
-            description="Solve this bite-sized puzzle in just a few minutes"
-            accent="warn"
-            status={stats.miniCrossword.played ? (stats.miniCrossword.won ? "won" : "lost") : "available"}
-            streak={stats.miniCrossword.streak}
-          />
-        </div>
-      </section>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <GameCard
+          href="/wordle"
+          title="Wordle"
+          description="Guess the 5-letter word with 6 chances"
+          status={stats.wordle.played ? (stats.wordle.won ? "won" : "lost") : "available"}
+          streak={stats.wordle.streak}
+        />
+        <GameCard
+          href="/connections"
+          title="Connections"
+          description="Group words that share a common thread"
+          status={stats.connections.played ? (stats.connections.won ? "won" : "lost") : "available"}
+          streak={stats.connections.streak}
+        />
+        <GameCard
+          href="/mini-crossword"
+          title="Mini Crossword"
+          description="Solve this bite-sized puzzle in just a few minutes"
+          status={stats.miniCrossword.played ? (stats.miniCrossword.won ? "won" : "lost") : "available"}
+          streak={stats.miniCrossword.streak}
+        />
+      </div>
 
       {/* Stats Section */}
-      <section>
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6 text-center">
+      <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-8">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
           Your Stats
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.1 }}
-            className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
-          >
-            <h3 className="text-lg font-semibold mb-2">Wordle</h3>
-            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-              <div>Current Streak: {stats.wordle.streak}</div>
-              <div>Today: {stats.wordle.played ? (stats.wordle.won ? "✅ Won" : "❌ Lost") : "⏳ Not played"}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              {stats.wordle.streak}
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.2 }}
-            className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
-          >
-            <h3 className="text-lg font-semibold mb-2">Connections</h3>
-            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-              <div>Current Streak: {stats.connections.streak}</div>
-              <div>Today: {stats.connections.played ? (stats.connections.won ? "✅ Won" : "❌ Lost") : "⏳ Not played"}</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Wordle Streak</div>
+            <div className="text-xs text-slate-500 dark:text-slate-500">
+              {stats.wordle.played ? (stats.wordle.won ? "✅ Today" : "❌ Today") : "⏳ Not played"}
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.3 }}
-            className="rounded-2xl p-5 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm"
-          >
-            <h3 className="text-lg font-semibold mb-2">Mini Crossword</h3>
-            <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
-              <div>Current Streak: {stats.miniCrossword.streak}</div>
-              <div>Today: {stats.miniCrossword.played ? (stats.miniCrossword.won ? "✅ Won" : "❌ Lost") : "⏳ Not played"}</div>
+          </div>
+          
+          <div className="text-center">
+            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              {stats.connections.streak}
             </div>
-          </motion.div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Connections Streak</div>
+            <div className="text-xs text-slate-500 dark:text-slate-500">
+              {stats.connections.played ? (stats.connections.won ? "✅ Today" : "❌ Today") : "⏳ Not played"}
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+              {stats.miniCrossword.streak}
+            </div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Mini Crossword Streak</div>
+            <div className="text-xs text-slate-500 dark:text-slate-500">
+              {stats.miniCrossword.played ? (stats.miniCrossword.won ? "✅ Today" : "❌ Today") : "⏳ Not played"}
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

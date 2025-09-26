@@ -299,23 +299,23 @@ export default function MiniCrosswordPage() {
 
   if (hasPlayedToday) {
     return (
-      <div className="container-page py-8 sm:py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-3xl font-bold mb-4">Mini Crossword</h1>
-          <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-8 mb-6">
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-8">Mini Crossword</h1>
+          <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-8 mb-6">
             <div className="text-6xl mb-4">✅</div>
-            <h2 className="text-xl font-semibold mb-2">Puzzle Complete!</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Puzzle Complete!</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-4">
               You solved today's Mini Crossword in {formatTime(currentTime)}
             </p>
             <button
               onClick={shareResults}
-              className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
             >
               Share Results
             </button>
           </div>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-500">
             Come back tomorrow for a new puzzle!
           </p>
         </div>
@@ -324,20 +324,20 @@ export default function MiniCrosswordPage() {
   }
 
   return (
-    <div className="container-page py-8 sm:py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold">Mini Crossword</h1>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">Mini Crossword</h1>
           <div className="flex items-center gap-4">
             {gameStarted && (
-              <div className="text-lg font-mono">
+              <div className="text-lg font-mono text-slate-600 dark:text-slate-400">
                 {formatTime(currentTime)}
               </div>
             )}
             {gameComplete && (
               <button
                 onClick={shareResults}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
               >
                 Share
               </button>
@@ -348,13 +348,13 @@ export default function MiniCrosswordPage() {
         {!gameStarted ? (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🧩</div>
-            <h2 className="text-2xl font-semibold mb-4">Ready to solve today's Mini Crossword?</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-6">
+            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-4">Ready to solve today's Mini Crossword?</h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6">
               Complete the puzzle as fast as you can!
             </p>
             <button
               onClick={startGame}
-              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg"
+              className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
             >
               Start Puzzle
             </button>
@@ -369,7 +369,7 @@ export default function MiniCrosswordPage() {
                     <div
                       key={`${rowIndex}-${colIndex}`}
                       className={cn(
-                        "aspect-square border-2 flex items-center justify-center text-lg font-bold cursor-pointer transition-colors",
+                        "aspect-square border-2 flex items-center justify-center text-lg font-bold cursor-pointer transition-colors relative",
                         cell.isBlack
                           ? "bg-black border-black"
                           : cell.isSelected
@@ -395,40 +395,42 @@ export default function MiniCrosswordPage() {
             {/* Clues */}
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold mb-3">Across</h3>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">Across</h3>
                 <div className="space-y-2">
                   {clues.across.map((clue) => (
                     <div
                       key={clue.number}
                       className={cn(
-                        "p-2 rounded cursor-pointer transition-colors",
+                        "p-3 rounded-lg cursor-pointer transition-colors",
                         currentClue?.number === clue.number && currentClue?.direction === "across"
                           ? "bg-blue-100 dark:bg-blue-900"
                           : "hover:bg-slate-100 dark:hover:bg-slate-800"
                       )}
                       onClick={() => setCurrentClue(clue)}
                     >
-                      <span className="font-semibold">{clue.number}.</span> {clue.text}
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">{clue.number}.</span> 
+                      <span className="text-slate-700 dark:text-slate-300 ml-1">{clue.text}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-3">Down</h3>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">Down</h3>
                 <div className="space-y-2">
                   {clues.down.map((clue) => (
                     <div
                       key={clue.number}
                       className={cn(
-                        "p-2 rounded cursor-pointer transition-colors",
+                        "p-3 rounded-lg cursor-pointer transition-colors",
                         currentClue?.number === clue.number && currentClue?.direction === "down"
                           ? "bg-blue-100 dark:bg-blue-900"
                           : "hover:bg-slate-100 dark:hover:bg-slate-800"
                       )}
                       onClick={() => setCurrentClue(clue)}
                     >
-                      <span className="font-semibold">{clue.number}.</span> {clue.text}
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">{clue.number}.</span> 
+                      <span className="text-slate-700 dark:text-slate-300 ml-1">{clue.text}</span>
                     </div>
                   ))}
                 </div>

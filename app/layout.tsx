@@ -2,59 +2,85 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import ThemeToggle from "@/components/ThemeToggle";
-import RegisterSW from "@/components/RegisterSW";
 import Link from "next/link";
+import RegisterSW from "@/components/RegisterSW";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const metadata: Metadata = {
   title: "Word Games",
-  description: "Personalized collection of daily word games",
+  description: "Play today's puzzles. New ones available every day.",
+  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${process.env.PORT || 3000}`),
+  manifest: `${basePath}/manifest.webmanifest`,
+  themeColor: "#ffffff",
   openGraph: {
-    title: "Word Games for Jessie",
-    description: "Play personalized Wordle and Connections with themes and memories.",
-    url: "https://example.com",
+    title: "Word Games",
+    description: "Play today's puzzles. New ones available every day.",
+    url: "https://keegantingle20.github.io/word-games/",
     siteName: "Word Games",
     images: [
-      { url: "/og.png", width: 1200, height: 630, alt: "Word Games" }
+      {
+        url: `${basePath}/og.png`,
+        width: 1200,
+        height: 630,
+        alt: "Word Games",
+      },
     ],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Word Games for Jessie",
-    description: "Play personalized Wordle and Connections with themes and memories.",
-    images: ["/og.png"],
+    title: "Word Games",
+    description: "Play today's puzzles. New ones available every day.",
+    images: [`${basePath}/og.png`],
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
-        <link rel="manifest" href={(process.env.NEXT_PUBLIC_BASE_PATH||"") + "/manifest.webmanifest"} />
-        <meta name="theme-color" content="#4f8cff" />
+      <body className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
         <ThemeProvider>
-          <RegisterSW />
-          <div className="min-h-dvh flex flex-col">
-            <header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-black/30 border-b border-black/10 dark:border-white/10">
-              <div className="container-page flex h-14 items-center justify-between">
-                <div className="flex items-center gap-6">
-                  <Link href="/" className="font-semibold tracking-tight text-slate-900 dark:text-slate-100">Word Games</Link>
-                  <nav className="hidden sm:flex items-center gap-4 text-sm opacity-80">
-                    <Link href="/wordle" className="hover:opacity-100">Wordle</Link>
-                    <Link href="/connections" className="hover:opacity-100">Connections</Link>
-                    <Link href="/mini-crossword" className="hover:opacity-100">Mini Crossword</Link>
+          <div className="min-h-screen">
+            <header className="border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex h-16 items-center justify-between">
+                  <div className="flex items-center">
+                    <Link href="/" className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                      Word Games
+                    </Link>
+                  </div>
+                  <nav className="hidden md:flex items-center space-x-8">
+                    <Link href="/wordle" className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100">
+                      Wordle
+                    </Link>
+                    <Link href="/connections" className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100">
+                      Connections
+                    </Link>
+                    <Link href="/mini-crossword" className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100">
+                      Mini Crossword
+                    </Link>
                   </nav>
+                  <div className="flex items-center">
+                    <ThemeToggle />
+                  </div>
                 </div>
-                <ThemeToggle />
               </div>
             </header>
-            <main className="flex-1">{children}</main>
-            <footer className="border-t border-black/10 dark:border-white/10">
-              <div className="container-page py-6 text-sm opacity-70">© {new Date().getFullYear()} Word Games</div>
+            <main className="bg-white dark:bg-slate-900">
+              {children}
+            </main>
+            <footer className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="text-center text-sm text-slate-500 dark:text-slate-400">
+                  © {new Date().getFullYear()} Word Games
+                </div>
+              </div>
             </footer>
           </div>
         </ThemeProvider>
+        <RegisterSW />
       </body>
     </html>
   );
