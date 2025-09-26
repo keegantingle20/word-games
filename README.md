@@ -1,6 +1,6 @@
-# Word Games with Personal Word Bank
+# Word Games - Personal Word Bank System
 
-A collection of word games including Wordle, Connections, and Mini Crossword with a personal word bank system.
+A collection of word games with a personal word bank system featuring 200+ custom words.
 
 ## Features
 - Personal word collection with 200+ words
@@ -10,3 +10,6 @@ A collection of word games including Wordle, Connections, and Mini Crossword wit
 
 ## Live Site
 https://keegantingle20.github.io/word-games/
+
+## GitHub Actions Status
+![Deploy to GitHub Pages](https://github.com/keegantingle20/word-games/actions/workflows/deploy.yml/badge.svg)
