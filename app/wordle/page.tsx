@@ -43,6 +43,8 @@ function dayIndex(date = new Date()) {
 }
 
 export default function WordlePage() {
+  console.log("🎮 WordlePage component rendering");
+  
   const [list, setList] = useState<WordleList | null>(null);
   const [allWords, setAllWords] = useState<WordEntry[]>([]);
   const [answer, setAnswer] = useState<string>("");
@@ -245,6 +247,9 @@ export default function WordlePage() {
     }
   }, [game, gameComplete, current, answer, rows, states, wordsSet]);
 
+  // Test if onKey function is defined
+  console.log("🔧 onKey function defined:", typeof onKey);
+
   // Add keyboard event listener
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -379,14 +384,30 @@ export default function WordlePage() {
           keyStates={{}}
         />
         
-        {/* Debug test button */}
-        <div className="mt-4 text-center">
+        {/* Debug test buttons */}
+        <div className="mt-4 text-center space-y-2">
           <button 
-            onClick={() => onKey("A")}
-            className="px-4 py-2 bg-blue-500 text-white rounded"
+            onClick={() => {
+              console.log("Button clicked!");
+              alert("Button clicked!");
+              onKey("A");
+            }}
+            className="px-4 py-2 bg-blue-500 text-white rounded mr-2"
           >
             Test Key A
           </button>
+          <button 
+            onClick={() => {
+              console.log("Direct setCurrent called!");
+              setCurrent(prev => prev + "B");
+            }}
+            className="px-4 py-2 bg-green-500 text-white rounded"
+          >
+            Direct Add B
+          </button>
+          <div className="text-sm text-gray-600">
+            Current word: "{current}"
+          </div>
         </div>
 
         {game === "won" && (
