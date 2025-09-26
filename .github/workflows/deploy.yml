@@ -21,11 +21,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Verify files
+        run: |
+          echo "📁 Current directory contents:"
+          ls -la
+          echo "📦 Package files:"
+          ls -la package*.json || echo "No package files found"
+          echo "🔒 Lock file:"
+          ls -la package-lock.json || echo "package-lock.json not found"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
         run: npm ci
