@@ -161,98 +161,89 @@ export default function WordlePage() {
   const onKey = useCallback((key: string) => {
     console.log("🔑 onKey called with:", key);
     console.log("🔍 Current game state:", { game, gameComplete, current, answer });
+    alert(`onKey called with: ${key}`); // Temporary alert for debugging
     
-    // Use functional updates to avoid dependency issues
-    setGame(currentGame => {
-      setGameComplete(currentComplete => {
-        if (currentGame !== "playing" || currentComplete) {
-          console.log("⚠️ onKey ignored - game not in playing state");
-          return currentComplete;
-        }
-        
-        if (key === "ENTER") {
-          setCurrent(currentWord => {
-            if (currentWord.length !== 5) {
-              setMessage("Not enough letters");
-              setTimeout(() => setMessage(""), 2000);
-              return currentWord;
-            }
-            
-            setWordsSet(currentWordsSet => {
-              if (!currentWordsSet.has(currentWord)) {
-                setMessage("Not in word list");
-                setTimeout(() => setMessage(""), 2000);
-                return currentWordsSet;
-              }
-              
-              setRows(currentRows => {
-                setStates(currentStates => {
-                  const newRows = [...currentRows, currentWord];
-                  const newStates = [...currentStates, evaluateGuess(currentWord, answer)];
-                  
-                  if (currentWord === answer) {
-                    setGame("won");
-                    setMessage("Correct!");
-                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-                    
-                    // Mark game as won
-                    dailyGameManager.markGamePlayed("wordle", true, { 
-                      guesses: newRows.length, 
-                      word: answer 
-                    });
-                    setGameComplete(true);
-                    
-                    // Update stats
-                    statsRef.current.games++;
-                    statsRef.current.wins++;
-                    statsRef.current.streak++;
-                    statsRef.current.maxStreak = Math.max(statsRef.current.maxStreak, statsRef.current.streak);
-                    statsRef.current.dist[newRows.length - 1]++;
-                    localStorage.setItem("stats", JSON.stringify(statsRef.current));
-                    
-                    setStreak(statsRef.current.streak);
-                  } else if (newRows.length === 6) {
-                    setGame("lost");
-                    setMessage(`The word was ${answer.toUpperCase()}`);
-                    
-                    // Mark game as lost
-                    dailyGameManager.markGamePlayed("wordle", false, { 
-                      guesses: 6, 
-                      word: answer 
-                    });
-                    setGameComplete(true);
-                    
-                    // Update stats
-                    statsRef.current.games++;
-                    statsRef.current.streak = 0;
-                    localStorage.setItem("stats", JSON.stringify(statsRef.current));
-                    
-                    setStreak(0);
-                  }
-                  
-                  setRows(newRows);
-                  setStates(newStates);
-                  return newStates;
-                });
-                return newRows;
-              });
-              
-              return currentWordsSet;
-            });
-            
-            return "";
-          });
-        } else if (key === "BACKSPACE") {
-          setCurrent(prev => prev.slice(0, -1));
-        } else if (key.match(/[A-Z]/) && key.length === 1) {
-          setCurrent(prev => prev.length < 5 ? prev + key : prev);
-        }
-        
-        return currentComplete;
+    // Simple test - just add letter to current word
+    if (key === "A" || key === "a") {
+      console.log("✅ Adding A to current word");
+      setCurrent(prev => {
+        const newCurrent = prev + "A";
+        console.log("📝 New current word:", newCurrent);
+        return newCurrent;
       });
-      return currentGame;
-    });
-  }, [answer]);
+      return;
+    }
+    
+    // Check if game is in playing state
+    if (game !== "playing" || gameComplete) {
+      console.log("⚠️ Game not in playing state - ignoring key");
+      return;
+    }
+    
+    if (key === "ENTER") {
+      if (current.length !== 5) {
+        setMessage("Not enough letters");
+        setTimeout(() => setMessage(""), 2000);
+        return;
+      }
+      if (!wordsSet.has(current)) {
+        setMessage("Not in word list");
+        setTimeout(() => setMessage(""), 2000);
+        return;
+      }
+      
+      const newRows = [...rows, current];
+      const newStates = [...states, evaluateGuess(current, answer)];
+      setRows(newRows);
+      setStates(newStates);
+      
+      if (current === answer) {
+        setGame("won");
+        setMessage("Correct!");
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        
+        // Mark game as won
+        dailyGameManager.markGamePlayed("wordle", true, { 
+          guesses: newRows.length, 
+          word: answer 
+        });
+        setGameComplete(true);
+        
+        // Update stats
+        statsRef.current.games++;
+        statsRef.current.wins++;
+        statsRef.current.streak++;
+        statsRef.current.maxStreak = Math.max(statsRef.current.maxStreak, statsRef.current.streak);
+        statsRef.current.dist[newRows.length - 1]++;
+        localStorage.setItem("stats", JSON.stringify(statsRef.current));
+        
+        setStreak(statsRef.current.streak);
+      } else if (newRows.length === 6) {
+        setGame("lost");
+        setMessage(`The word was ${answer.toUpperCase()}`);
+        
+        // Mark game as lost
+        dailyGameManager.markGamePlayed("wordle", false, { 
+          guesses: 6, 
+          word: answer 
+        });
+        setGameComplete(true);
+        
+        // Update stats
+        statsRef.current.games++;
+        statsRef.current.streak = 0;
+        localStorage.setItem("stats", JSON.stringify(statsRef.current));
+        
+        setStreak(0);
+      }
+      
+      setCurrent("");
+    } else if (key === "BACKSPACE") {
+      setCurrent(prev => prev.slice(0, -1));
+    } else if (key.match(/[A-Z]/) && key.length === 1) {
+      setCurrent(prev => prev.length < 5 ? prev + key : prev);
+    }
+  }, [game, gameComplete, current, answer, rows, states, wordsSet]);
 
   // Add keyboard event listener
   useEffect(() => {
