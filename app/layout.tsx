@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   description: "Play today's puzzles. New ones available every day.",
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${process.env.PORT || 3000}`),
   manifest: `${basePath}/manifest.webmanifest`,
+  other: {
+    'version': '2.0.0',
+    'build-time': new Date().toISOString(),
+  },
   openGraph: {
     title: "Jessie's Games",
     description: "Play today's puzzles. New ones available every day.",
