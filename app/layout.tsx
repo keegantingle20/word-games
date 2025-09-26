@@ -8,16 +8,16 @@ import RegisterSW from "@/components/RegisterSW";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 export const metadata: Metadata = {
-  title: "Word Games",
+  title: "Jessie's Games",
   description: "Play today's puzzles. New ones available every day.",
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:${process.env.PORT || 3000}`),
   manifest: `${basePath}/manifest.webmanifest`,
   themeColor: "#ffffff",
   openGraph: {
-    title: "Word Games",
+    title: "Jessie's Games",
     description: "Play today's puzzles. New ones available every day.",
     url: "https://keegantingle20.github.io/word-games/",
-    siteName: "Word Games",
+    siteName: "Jessie's Games",
     images: [
       {
         url: `${basePath}/og.png`,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Word Games",
+    title: "Jessie's Games",
     description: "Play today's puzzles. New ones available every day.",
     images: [`${basePath}/og.png`],
   },
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <Link href="/" className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-                      Word Games
+                      Jessie's Games
                     </Link>
                   </div>
                   <nav className="hidden md:flex items-center space-x-8">
